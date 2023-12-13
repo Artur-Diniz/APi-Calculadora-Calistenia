@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Calistenia.Data;
 using Calistenia.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ namespace Calistenia.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            try 
+            try
             {
                 List<Treino> tr = await _context.TB_TREINOS.ToListAsync();
 
@@ -32,20 +33,41 @@ namespace Calistenia.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetTreino(int id )
+        public async Task<IActionResult> GetTreino(int id)
         {
             try
-            {   
-                Treino tr = await _context.TB_TREINOS.FirstOrDefaultAsync(e => e.Id == id);
+            {
+                Treino tr = await _context.TB_TREINOS
+                .Include( r =>  r.RepSeries)
+                .Include(us => us.Usuario)
+                .FirstOrDefaultAsync(e => e.Id == id);
+
+                 
 
                 return Ok(tr);
-
             }
             catch (System.Exception ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> AddTreino(Treino NovoTreino)
+        {
+            try
+            {
+                RepSerie repSerie = await _context
+                    .TB_REPSERIE
+                    .Include(t => t.Treinos)
+                    .FirstOrDefaultAsync(t => t.Id == NovoTreino.Rep_1);
+
+                return Ok(NovoTreino);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete]
@@ -53,21 +75,16 @@ namespace Calistenia.Controllers
         {
             try
             {
-               Treino tr = await _context.TB_TREINOS.FirstOrDefaultAsync(e => e.Id == id);
-                    _context.TB_TREINOS.Remove(tr);
+                Treino tr = await _context.TB_TREINOS.FirstOrDefaultAsync(e => e.Id == id);
+                _context.TB_TREINOS.Remove(tr);
 
                 int linhasafetadas = await _context.SaveChangesAsync();
                 return Ok(linhasafetadas);
             }
-              catch (System.Exception ex)
+            catch (System.Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-
-
-        }    
-    
-    
-    
+        }
     }
 }

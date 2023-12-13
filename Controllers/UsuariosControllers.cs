@@ -27,6 +27,42 @@ namespace Calistenia.Controllers
             return false;
         }
 
+
+        [HttpGet("GetAll")]
+        public async Task<ActionResult> GetUsuarios()
+        {
+
+            try
+            {
+                List<Usuario> usuarios = await _context.TB_USUARIO.ToListAsync();
+
+                return Ok(usuarios);
+            }
+               catch   (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("{usuarioId}")]
+        public async Task<IActionResult> GetUsuario(int usuarioId)
+        {
+            try
+            {
+                //List exigirá o using System.Collections.Generic
+                Usuario usuario = await _context.TB_USUARIO //Busca o usuário no banco através do Id
+                   .FirstOrDefaultAsync(x => x.Id == usuarioId);
+
+                return Ok(usuario);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+           
+
+
         [HttpPost("Registarar")]
         public async Task<ActionResult> RegisrarUsuario(Usuario user)
         {
@@ -50,6 +86,9 @@ namespace Calistenia.Controllers
             }
         }
 
+ 
+        
+
 
 
         [HttpPost("Autenticar")]
@@ -67,6 +106,11 @@ namespace Calistenia.Controllers
                 {throw new System.Exception("Senha incorreta.");}
                 else 
                 {
+                    usuario.DataAcesso = System.DateTime.Now;
+                    _context.TB_USUARIO.Update(usuario);
+                    await _context.SaveChangesAsync();
+
+                    
                     return Ok(usuario);
                 }
 
@@ -75,6 +119,37 @@ namespace Calistenia.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> AlterarSenhaUsuario(Usuario senhas)
+        {
+            try
+            {
+                Usuario usuario = await _context.TB_USUARIO
+                    .FirstOrDefaultAsync(u => u.Username.ToLower().Equals(senhas.Username.ToLower()));
+
+                if(usuario ==  null)
+                {
+                    throw new Exception("Usuario não encontrado");
+                }
+
+                Criptografia.CriarPasswordHash(senhas.PasswordString, out byte[] hash, out byte[] salt);
+                usuario.PasswordHash = hash;
+                usuario.PasswordSalt = salt;
+
+
+                _context.TB_USUARIO.Update(usuario);
+                int linhasafetadas = await _context.SaveChangesAsync();
+
+                return Ok(linhasafetadas);
+
+            }
+             catch   (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
     }

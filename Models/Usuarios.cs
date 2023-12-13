@@ -9,13 +9,13 @@ namespace Calistenia
 {
      public class Usuario
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public string Username { get; set; }=string.Empty;
 
-        public byte[] PasswordHash { get; set; }
+        public byte[]? PasswordHash { get; set; }
 
-        public byte[] PasswordSalt { get; set; }
+        public byte[]? PasswordSalt { get; set; }
 
         public byte[]? Foto { get; set; }
 
@@ -28,10 +28,10 @@ namespace Calistenia
         [NotMapped]
         public string PasswordString { get; set; }=string.Empty;
 
-        public List<Treino> Treinos { get; set; }
+        public List<Treino>? Treinos { get; set; }
 
         public string Perfil { get; set; }=string.Empty;
 
-        public String Email { get; set; }=string.Empty;
+        public string Email { get; set; }=string.Empty;
     }
 }

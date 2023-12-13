@@ -1,5 +1,6 @@
 using Calistenia.Models;
 using Calistenia.Models.Enum;
+using Calistenia.Utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace Calistenia.Data
@@ -14,7 +15,7 @@ namespace Calistenia.Data
         public DbSet<Treino> TB_TREINOS { get; set; }
         public DbSet<RepSerie> TB_REPSERIE { get; set; }
 
-    public DbSet<Usuario> TB_USUARIO {get; set;}
+         public DbSet<Usuario> TB_USUARIO {get; set;}
 
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -194,7 +195,7 @@ namespace Calistenia.Data
                         Nome = "treino de Perna",
                         Descricao = "ta potente essa perna fibrada ai meu mano",
                         Tipo = "PERNA",
-                        Rep_1=1,
+                        Rep_1=1,Rep_2=3
                        
                     }
                 );

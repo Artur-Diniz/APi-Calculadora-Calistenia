@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Calistenia.Models.Enum;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Calistenia.Models
 {
@@ -23,6 +24,7 @@ namespace Calistenia.Models
         public Musculo GpMuscular_4 { get; set; }
 
         [JsonIgnore]
+        [NotMapped]
         public List<RepSerie>? RepSeries { get; set; }
 
 

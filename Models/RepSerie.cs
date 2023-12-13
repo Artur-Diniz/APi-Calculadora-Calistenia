@@ -22,8 +22,8 @@ namespace Calistenia.Models
         public int exercicioId { get; set; }
     
 
-        public Treino Treinos {get; set;}
-        public int treinoId { get; set; }
+        public Treino? Treinos {get; set;}
+        public int? treinoId { get; set; }
 
     }
     }

@@ -1,15 +1,14 @@
 using Calistenia.Data;
-using Microsoft.AspNetCore.Mvc;
 using Calistenia.Models;
+using Calistenia.Models.Enum;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace Calistenia.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-
-     public class ExerciciosController : ControllerBase
+    public class ExerciciosController : ControllerBase
     {
         private readonly DataContext _context;
 
@@ -18,8 +17,7 @@ namespace Calistenia.Controllers
             _context = context;
         }
 
-    
-           [HttpGet("{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult> GetSingle(int id)
         {
             try
@@ -30,11 +28,68 @@ namespace Calistenia.Controllers
 
                 return Ok(e);
             }
-                catch (System.Exception ex)
-                {
-                    return BadRequest(ex.Message);
-                }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
+        [HttpGet("GetMusculo/{gp}")]
+        public async Task<IActionResult> GetGpMuscular(int gp)
+        {
+            try
+            {
+                Musculo musculo = (Musculo)gp;
+
+                List<Exercicio> e = await _context
+                    .TB_EXERCICIO
+                    .Where(
+                        ms =>
+                            ms.GpMuscular_1 == musculo
+                            || ms.GpMuscular_2 == musculo
+                            || ms.GpMuscular_3 == musculo
+                            || ms.GpMuscular_4 == musculo
+                    )
+                    .ToListAsync();
+
+                return Ok(e);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetDificuldade/{ds}")]
+        public async Task<IActionResult> GetDificuldade(int ds)
+        {
+
+            try
+            {
+                Dificuldade dificul = (Dificuldade)ds;
+
+                List<Exercicio> lista = await _context.TB_EXERCICIO
+                    .Where( ms => ms.dificuldade == dificul).ToListAsync();
+
+                return Ok(ds);
+            }
+             catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetByNome/{nome}")]
+        public async Task<IActionResult> GetByNomeAsync( string nome)
+        {
+            Exercicio exercicio = await _context.TB_EXERCICIO
+                .FirstOrDefaultAsync(e => e.Nome.Contains(nome));
+
+
+            return Ok(exercicio);
+        }
+
 
         [HttpGet("GetAll")]
         public async Task<ActionResult> Get()
@@ -100,8 +155,7 @@ namespace Calistenia.Controllers
             }
         }
 
-
-         [HttpPut]
+        [HttpPut]
         public async Task<ActionResult> Update(Exercicio exAlterado)
         {
             try
@@ -112,12 +166,25 @@ namespace Calistenia.Controllers
                 if (exAlterado.Nome == null)
                     return BadRequest("O Exercico deve conter um Nome");
 
-                if (exAlterado.GpMuscular_1 != exAlterado.GpMuscular_2 && exAlterado.GpMuscular_3 != exAlterado.GpMuscular_4)
-                if (exAlterado.GpMuscular_1 != exAlterado.GpMuscular_3 && exAlterado.GpMuscular_2 != exAlterado.GpMuscular_4)
-                if (exAlterado.GpMuscular_1 != exAlterado.GpMuscular_4&& exAlterado.GpMuscular_2 != exAlterado.GpMuscular_3)
+                if (
+                    exAlterado.GpMuscular_1 != exAlterado.GpMuscular_2
+                    && exAlterado.GpMuscular_3 != exAlterado.GpMuscular_4
+                )
+                    if (
+                        exAlterado.GpMuscular_1 != exAlterado.GpMuscular_3
+                        && exAlterado.GpMuscular_2 != exAlterado.GpMuscular_4
+                    )
+                        if (
+                            exAlterado.GpMuscular_1 != exAlterado.GpMuscular_4
+                            && exAlterado.GpMuscular_2 != exAlterado.GpMuscular_3
+                        )
                             return Ok(exAlterado);
 
-                if (exAlterado.GpMuscular_2 == null && exAlterado.GpMuscular_3 == null && exAlterado.GpMuscular_4 == null)
+                if (
+                    exAlterado.GpMuscular_2 == null
+                    && exAlterado.GpMuscular_3 == null
+                    && exAlterado.GpMuscular_4 == null
+                )
                     return Ok(exAlterado);
 
                 if (exAlterado.GpMuscular_1 == null)
@@ -142,7 +209,8 @@ namespace Calistenia.Controllers
         {
             try
             {
-                Exercicio eRemover = await _context.TB_EXERCICIO
+                Exercicio eRemover = await _context
+                    .TB_EXERCICIO
                     .FirstOrDefaultAsync(ex => ex.Id == id);
                 _context.TB_EXERCICIO.Remove(eRemover);
 
@@ -154,7 +222,5 @@ namespace Calistenia.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-
     }
 }
