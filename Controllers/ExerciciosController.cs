@@ -155,7 +155,7 @@ namespace Calistenia.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("{exAlterado}")]
         public async Task<ActionResult> Update(Exercicio exAlterado)
         {
             try
@@ -204,7 +204,7 @@ namespace Calistenia.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             try

@@ -15,15 +15,13 @@ namespace Calistenia.Data
         public DbSet<Treino> TB_TREINOS { get; set; }
         public DbSet<RepSerie> TB_REPSERIE { get; set; }
 
-         public DbSet<Usuario> TB_USUARIO {get; set;}
+        public DbSet<Usuario> TB_USUARIO { get; set; }
 
-        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {               
+        {
+            modelBuilder.Entity<Usuario>().ToTable("TB_USUARIO");
+            modelBuilder.Entity<Usuario>().HasKey(u => u.Id);
 
-      
-   
-           
             base.OnModelCreating(modelBuilder);
             {
                 modelBuilder
@@ -149,6 +147,20 @@ namespace Calistenia.Data
                 .HasPrincipalKey(te => te.Id);
 
             modelBuilder
+                .Entity<RepSerie>()
+                .HasOne(rs => rs.Exercicios)
+                .WithMany(e => e.RepSeries)
+                .HasForeignKey(rs => rs.exercicioId)
+                .IsRequired();
+
+            modelBuilder
+                .Entity<RepSerie>()
+                .HasOne(rs => rs.Treinos)
+                .WithMany(t => t.RepSeries)
+                .HasForeignKey(rs => rs.treinoId)
+                .IsRequired(false);
+
+            modelBuilder
                 .Entity<Exercicio>()
                 .HasMany(e => e.RepSeries)
                 .WithOne(e => e.Exercicios)
@@ -165,7 +177,7 @@ namespace Calistenia.Data
                         Id = 1,
                         Repeticao = 8,
                         Serie = 3,
-                        exercicioId=9,
+                        exercicioId = 9,
                         treinoId = 1
                     },
                     new RepSerie()
@@ -173,7 +185,7 @@ namespace Calistenia.Data
                         Id = 2,
                         Repeticao = 10,
                         Serie = 2,
-                        exercicioId=9,
+                        exercicioId = 9,
                         treinoId = 1
                     },
                     new RepSerie()
@@ -181,7 +193,7 @@ namespace Calistenia.Data
                         Id = 3,
                         Repeticao = 12,
                         Serie = 2,
-                        exercicioId=9,
+                        exercicioId = 9,
                         treinoId = 1
                     }
                 );
@@ -195,32 +207,29 @@ namespace Calistenia.Data
                         Nome = "treino de Perna",
                         Descricao = "ta potente essa perna fibrada ai meu mano",
                         Tipo = "PERNA",
-                        Rep_1=1,Rep_2=3
-                       
+                        Rep_1 = 1,
+                        Rep_2 = 3
                     }
                 );
 
-           Usuario user = new Usuario();
+            Usuario user = new Usuario();
             Criptografia.CriarPasswordHash("123456", out byte[] hash, out byte[] salt);
-                user.Id= 1;
-                user.Username = "UsuarioAdmin";
-                user.PasswordString = string.Empty;
-                user.PasswordHash = hash;
-                user.PasswordSalt = salt;
-                user.Perfil = "Admin";
-                user.Email = "arturdiniz06@gmail.com";
-                user.Latitude = -23.5200241;
-                user.Longitude = -46.596498;
+            user.Id = 1;
+            user.Username = "UsuarioAdmin";
+            user.PasswordString = string.Empty;
+            user.PasswordHash = hash;
+            user.PasswordSalt = salt;
+            user.Perfil = "Admin";
+            user.Email = "arturdiniz06@gmail.com";
+            user.Latitude = -23.5200241;
+            user.Longitude = -46.596498;
 
-                modelBuilder.Entity<Usuario>().HasData(user);
+            modelBuilder.Entity<Usuario>().ToTable("TB_USUARIO");
+            modelBuilder.Entity<Usuario>().HasKey(u => u.Id);
 
+            modelBuilder.Entity<Usuario>().HasData(user);
 
-                modelBuilder.Entity<Usuario>().Property(u => u.Perfil).HasDefaultValue("Usuario");
-
-            
-
+            modelBuilder.Entity<Usuario>().Property(u => u.Perfil).HasDefaultValue("Usuario");
         }
-            
-        
     }
 }

@@ -53,6 +53,11 @@ namespace Calistenia.Controllers
                 Usuario usuario = await _context.TB_USUARIO //Busca o usuário no banco através do Id
                    .FirstOrDefaultAsync(x => x.Id == usuarioId);
 
+                if( usuario.Id == null)
+                {
+                    throw new Exception("esse Id não foi encontrado");
+                }
+
                 return Ok(usuario);
             }
             catch (System.Exception ex)
@@ -121,7 +126,7 @@ namespace Calistenia.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("AlterarSenha")]
         public async Task<IActionResult> AlterarSenhaUsuario(Usuario senhas)
         {
             try
@@ -151,6 +156,7 @@ namespace Calistenia.Controllers
             }
 
         }
+
 
     }
 }

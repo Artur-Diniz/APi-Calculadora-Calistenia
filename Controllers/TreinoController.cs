@@ -24,6 +24,7 @@ namespace Calistenia.Controllers
             {
                 List<Treino> tr = await _context.TB_TREINOS.ToListAsync();
 
+     
                 return Ok(tr);
             }
             catch (System.Exception ex)
@@ -37,12 +38,27 @@ namespace Calistenia.Controllers
         {
             try
             {
-                Treino tr = await _context.TB_TREINOS
-                .Include( r =>  r.RepSeries)
-                .Include(us => us.Usuario)
-                .FirstOrDefaultAsync(e => e.Id == id);
+                Treino tr = await _context
+                    .TB_TREINOS
+                    .Include(us => us.Usuario)
+                    .FirstOrDefaultAsync(e => e.Id == id);
 
-                 
+                List<RepSerie> repSerie = await _context
+                    .TB_REPSERIE
+                    .Where(
+                        r =>
+                            r.Id == tr.Rep_1
+                            || r.Id == tr.Rep_2
+                            || r.Id == tr.Rep_3
+                            || r.Id == tr.Rep_4
+                            || r.Id == tr.Rep_5
+                            || r.Id == tr.Rep_6
+                            || r.Id == tr.Rep_7
+                            || r.Id == tr.Rep_8
+                            || r.Id == tr.Rep_9
+                            || r.Id == tr.Rep_10
+                    )
+                    .ToListAsync();
 
                 return Ok(tr);
             }

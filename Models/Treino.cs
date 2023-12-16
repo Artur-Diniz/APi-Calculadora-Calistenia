@@ -37,7 +37,6 @@ namespace Calistenia.Models
         public int? Rep_9 { get; set; }
         public int? Rep_10 { get; set; }
 
-        [NotMapped]
         [JsonIgnore]
         public Usuario?  Usuario { get; set; }
         

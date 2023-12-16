@@ -66,7 +66,7 @@ namespace API_Calistenia.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TB_EXERCICIO");
+                    b.ToTable("TB_EXERCICIO", (string)null);
 
                     b.HasData(
                         new
@@ -81,118 +81,6 @@ namespace API_Calistenia.Migrations
                             Modo = "Repetição",
                             Nome = "Flexão Padrão",
                             Tipo = "PUSH",
-                            dificuldade = 2
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Descricao = " ",
-                            Exercicio_Facilitado = "",
-                            GpMuscular_1 = 1,
-                            GpMuscular_2 = 2,
-                            GpMuscular_3 = 4,
-                            GpMuscular_4 = 5,
-                            Modo = "Repetição",
-                            Nome = "Flexão Pike",
-                            Tipo = "PUSH",
-                            dificuldade = 3
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Descricao = " ",
-                            Exercicio_Facilitado = "",
-                            GpMuscular_1 = 10,
-                            GpMuscular_2 = 11,
-                            GpMuscular_3 = 0,
-                            GpMuscular_4 = 0,
-                            Modo = "Repetição",
-                            Nome = "Elevação de Pernas na barra",
-                            Tipo = "CORE",
-                            dificuldade = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Descricao = " ",
-                            Exercicio_Facilitado = "",
-                            GpMuscular_1 = 6,
-                            GpMuscular_2 = 3,
-                            GpMuscular_3 = 0,
-                            GpMuscular_4 = 0,
-                            Modo = "Repetição",
-                            Nome = "Barra Fixa Pronada",
-                            Tipo = "PULL",
-                            dificuldade = 3
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Descricao = " ",
-                            Exercicio_Facilitado = "",
-                            GpMuscular_1 = 3,
-                            GpMuscular_2 = 8,
-                            GpMuscular_3 = 6,
-                            GpMuscular_4 = 0,
-                            Modo = "Repetição",
-                            Nome = "Barra Fixa Supinada",
-                            Tipo = "PULL",
-                            dificuldade = 3
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Descricao = " ",
-                            Exercicio_Facilitado = "",
-                            GpMuscular_1 = 9,
-                            GpMuscular_2 = 0,
-                            GpMuscular_3 = 0,
-                            GpMuscular_4 = 0,
-                            Modo = "Repetição",
-                            Nome = "Flexão Lombar",
-                            Tipo = "CORE",
-                            dificuldade = 2
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Descricao = " ",
-                            Exercicio_Facilitado = "",
-                            GpMuscular_1 = 12,
-                            GpMuscular_2 = 0,
-                            GpMuscular_3 = 0,
-                            GpMuscular_4 = 0,
-                            Modo = "Repetição",
-                            Nome = "Prancha Lateral",
-                            Tipo = "CORE",
-                            dificuldade = 2
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Descricao = " ",
-                            Exercicio_Facilitado = "",
-                            GpMuscular_1 = 15,
-                            GpMuscular_2 = 14,
-                            GpMuscular_3 = 0,
-                            GpMuscular_4 = 0,
-                            Modo = "Repetição",
-                            Nome = "Afundos",
-                            Tipo = "PERNA",
-                            dificuldade = 2
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Descricao = " ",
-                            Exercicio_Facilitado = "",
-                            GpMuscular_1 = 16,
-                            GpMuscular_2 = 0,
-                            GpMuscular_3 = 0,
-                            GpMuscular_4 = 0,
-                            Modo = "Repetição",
-                            Nome = "Elevação de Calcanhar",
-                            Tipo = "PERNA",
                             dificuldade = 2
                         });
                 });
@@ -214,7 +102,7 @@ namespace API_Calistenia.Migrations
                     b.Property<int>("exercicioId")
                         .HasColumnType("int");
 
-                    b.Property<int>("treinoId")
+                    b.Property<int?>("treinoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -223,7 +111,7 @@ namespace API_Calistenia.Migrations
 
                     b.HasIndex("treinoId");
 
-                    b.ToTable("TB_REPSERIE");
+                    b.ToTable("TB_REPSERIE", (string)null);
 
                     b.HasData(
                         new
@@ -231,22 +119,6 @@ namespace API_Calistenia.Migrations
                             Id = 1,
                             Repeticao = 8,
                             Serie = 3,
-                            exercicioId = 9,
-                            treinoId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Repeticao = 10,
-                            Serie = 2,
-                            exercicioId = 9,
-                            treinoId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Repeticao = 12,
-                            Serie = 2,
                             exercicioId = 9,
                             treinoId = 1
                         });
@@ -302,9 +174,14 @@ namespace API_Calistenia.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UsuarioId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("TB_TREINOS");
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("TB_TREINOS", (string)null);
 
                     b.HasData(
                         new
@@ -313,7 +190,75 @@ namespace API_Calistenia.Migrations
                             Descricao = "ta potente essa perna fibrada ai meu mano",
                             Nome = "treino de Perna",
                             Rep_1 = 1,
+                            Rep_2 = 3,
                             Tipo = "PERNA"
+                        });
+                });
+
+            modelBuilder.Entity("Calistenia.Usuario", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
+
+                    b.Property<DateTime?>("DataAcesso")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("Dt_Acesso");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Email");
+
+                    b.Property<byte[]>("Foto")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<double?>("Latitude")
+                        .HasColumnType("float")
+                        .HasColumnName("Latitude");
+
+                    b.Property<double?>("Longitude")
+                        .HasColumnType("float")
+                        .HasColumnName("Longitude");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .HasColumnType("varbinary(max)")
+                        .HasColumnName("PassWord_H");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .HasColumnType("varbinary(max)")
+                        .HasColumnName("PassWord_S");
+
+                    b.Property<string>("Perfil")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Usuario")
+                        .HasColumnName("Perfil");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("U_Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TB_USUARIO", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "arturdiniz06@gmail.com",
+                            Latitude = -23.520024100000001,
+                            Longitude = -46.596497999999997,
+                            PasswordHash = new byte[] { 71, 194, 34, 185, 244, 185, 174, 244, 80, 23, 177, 183, 133, 30, 156, 232, 254, 56, 56, 206, 96, 190, 195, 171, 206, 201, 0, 14, 109, 51, 45, 173, 241, 18, 185, 41, 129, 81, 54, 18, 48, 130, 110, 31, 200, 255, 139, 61, 164, 13, 67, 180, 36, 184, 249, 13, 78, 119, 93, 134, 187, 148, 160, 55 },
+                            PasswordSalt = new byte[] { 167, 209, 201, 129, 211, 104, 164, 181, 188, 135, 72, 102, 221, 134, 13, 28, 249, 145, 84, 144, 120, 206, 79, 176, 132, 103, 45, 81, 178, 12, 150, 145, 246, 31, 93, 143, 112, 149, 112, 16, 89, 43, 29, 152, 63, 133, 167, 242, 29, 17, 187, 140, 72, 88, 135, 213, 63, 92, 218, 159, 179, 144, 52, 131, 232, 174, 203, 50, 237, 86, 156, 177, 111, 173, 14, 35, 194, 36, 168, 99, 76, 65, 8, 64, 90, 237, 28, 32, 153, 85, 43, 229, 177, 115, 188, 169, 211, 0, 105, 31, 93, 162, 33, 210, 162, 71, 177, 177, 202, 247, 55, 27, 155, 193, 85, 138, 132, 133, 24, 60, 186, 127, 121, 19, 241, 180, 73, 230 },
+                            Perfil = "Admin",
+                            Username = "UsuarioAdmin"
                         });
                 });
 
@@ -327,13 +272,20 @@ namespace API_Calistenia.Migrations
 
                     b.HasOne("Calistenia.Models.Treino", "Treinos")
                         .WithMany("RepSeries")
-                        .HasForeignKey("treinoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("treinoId");
 
                     b.Navigation("Exercicios");
 
                     b.Navigation("Treinos");
+                });
+
+            modelBuilder.Entity("Calistenia.Models.Treino", b =>
+                {
+                    b.HasOne("Calistenia.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Calistenia.Models.Exercicio", b =>

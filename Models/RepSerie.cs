@@ -8,13 +8,14 @@ using Calistenia.Models;
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Calistenia.Models
 {
     public class RepSerie
     {   
         [Key]
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public int Repeticao { get; set; }
         public int Serie { get; set; }
 
@@ -23,7 +24,9 @@ namespace Calistenia.Models
     
 
         public Treino? Treinos {get; set;}
-        public int? treinoId { get; set; }
+        [NotMapped]
+        public int? treinoId { get; set; }// no banco esse atributo é obrigátorio  
+        
 
     }
     }

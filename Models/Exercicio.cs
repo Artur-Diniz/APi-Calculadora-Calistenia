@@ -30,6 +30,11 @@ namespace Calistenia.Models
 
 
         public string?  Exercicio_Facilitado { get; set; }=string.Empty;
+
+        public static implicit operator Exercicio?(RepSerie? v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

@@ -78,8 +78,3 @@ C:\Users\artur\OneDrive\Área de Trabalho\etec\DS\API-Calistenia\obj\Debug\net7.
 C:\Users\artur\OneDrive\Área de Trabalho\etec\DS\API-Calistenia\obj\Debug\net7.0\API-Calistenia.pdb
 C:\Users\artur\OneDrive\Área de Trabalho\etec\DS\API-Calistenia\obj\Debug\net7.0\API-Calistenia.genruntimeconfig.cache
 C:\Users\artur\OneDrive\Área de Trabalho\etec\DS\API-Calistenia\obj\Debug\net7.0\ref\API-Calistenia.dll
-C:\Users\artur\OneDrive\Área de Trabalho\etec\DS\API-Calistenia\bin\Debug\net7.0\publish\web.config
-C:\Users\artur\OneDrive\Área de Trabalho\etec\DS\API-Calistenia\bin\Debug\net7.0\publish\API-Calistenia.deps.json
-C:\Users\artur\OneDrive\Área de Trabalho\etec\DS\API-Calistenia\bin\Debug\net7.0\publish\API-Calistenia.runtimeconfig.json
-C:\Users\artur\OneDrive\Área de Trabalho\etec\DS\API-Calistenia\bin\Debug\net7.0\publish\appsettings.Development.json
-C:\Users\artur\OneDrive\Área de Trabalho\etec\DS\API-Calistenia\bin\Debug\net7.0\publish\appsettings.json
